@@ -98,7 +98,6 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
           .trim()
           .split(' ');
 
-      // ---------- PASS 1: MULTIPLICATION & DIVISION ----------
       for (int i = 0; i < tokens.length; i++) {
         if (tokens[i] == '*' || tokens[i] == '/') {
           double left = double.parse(tokens[i - 1]);
@@ -107,9 +106,9 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
           double result = tokens[i] == '*' ? left * right : left / right;
 
           tokens[i - 1] = result.toString();
-          tokens.removeAt(i); // remove operator
-          tokens.removeAt(i); // remove right operand
-          i--; // step back
+          tokens.removeAt(i);
+          tokens.removeAt(i);
+          i--;
         }
       }
 
