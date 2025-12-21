@@ -301,8 +301,9 @@ Alok Pandey
 
 ## 📞 Support
 
-For support, email your.email@example.com or create an issue in this repository.
+For support,email ap737147@gmail.com or create an issue in this repository.
 
 ---
 
 **Made with ❤️ using Flutter**
+
