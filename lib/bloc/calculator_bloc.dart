@@ -91,32 +91,37 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
     if (exp.isEmpty) return '0';
 
     try {
-      final tokens = exp
+      List<String> tokens = exp
           .replaceAll('×', '*')
           .replaceAll('÷', '/')
           .replaceAll('%', '')
           .trim()
           .split(' ');
 
+      // ---------- PASS 1: MULTIPLICATION & DIVISION ----------
+      for (int i = 0; i < tokens.length; i++) {
+        if (tokens[i] == '*' || tokens[i] == '/') {
+          double left = double.parse(tokens[i - 1]);
+          double right = double.parse(tokens[i + 1]);
+
+          double result = tokens[i] == '*' ? left * right : left / right;
+
+          tokens[i - 1] = result.toString();
+          tokens.removeAt(i); // remove operator
+          tokens.removeAt(i); // remove right operand
+          i--; // step back
+        }
+      }
+
       double result = double.parse(tokens[0]);
 
       for (int i = 1; i < tokens.length; i += 2) {
-        final op = tokens[i];
-        final val = double.parse(tokens[i + 1]);
+        double value = double.parse(tokens[i + 1]);
 
-        switch (op) {
-          case '+':
-            result += val;
-            break;
-          case '-':
-            result -= val;
-            break;
-          case '*':
-            result *= val;
-            break;
-          case '/':
-            result /= val;
-            break;
+        if (tokens[i] == '+') {
+          result += value;
+        } else if (tokens[i] == '-') {
+          result -= value;
         }
       }
 
